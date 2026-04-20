@@ -1,0 +1,8 @@
+Drop Walkway_Black.ttf into this folder.
+
+Download from: https://www.dafont.com/walkway.font
+(free for personal use — check licence for commercial)
+
+The file must be named exactly: Walkway_Black.ttf
+If yours has a different name, either rename it or update the
+@font-face url() at the top of style.css to match.

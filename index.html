@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pentagon Studios</title>
+  <meta name="description" content="Talent management for people building something real. Studios, labels, programs and platforms designed to support music that deserves time, trust and space to grow.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="logo.png">
+</head>
+<body class="home">
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-brand">Pentagon Studios</a>
+    <ul class="nav-links">
+      <li><a href="music.html">Music</a></li>
+      <li><a href="talent-strategy.html">Talent &amp; Strategy</a></li>
+      <li><a href="mentorship.html">Mentorship</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE NAV ── -->
+  <div class="nav-mobile" role="dialog" aria-label="Navigation">
+    <a href="music.html">Music</a>
+    <a href="talent-strategy.html">Talent &amp; Strategy</a>
+    <a href="mentorship.html">Mentorship</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- ── SCROLL STORY ──
+       Single sticky section. As you scroll:
+       - Title shrinks from hero → section size
+       - CTAs fade out
+       - Body copy fades in
+  -->
+  <section class="scroll-story" id="scroll-story">
+    <div class="scroll-sticky">
+
+      <h1 id="hero-title">Pentagon Studios</h1>
+
+      <!-- Fades out on scroll -->
+      <div id="hero-ctas" class="hero-ctas">
+        <a href="talent-strategy.html" class="btn btn-accent">Explore Portfolio</a>
+        <a href="contact.html" class="btn btn-accent">Get in touch</a>
+      </div>
+
+      <!-- Fades in when title reaches section size -->
+      <div id="about-copy" class="about-copy">
+        <p class="t-body">
+          Music moves fast. Attention fades faster.<br><br>
+          Most things are built to be noticed, not to last. Pentagon is built differently.
+          We focus on the parts of music that matter. Craft. Systems. Guidance. People. Time.<br><br>
+          Pentagon creates spaces where skill is sharpened, ideas are supported, and artists
+          are not left behind.<br><br>
+          Studios, labels, programs and platforms. All designed to support music that
+          deserves time, trust and space to grow.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── HOVER FRAME — trails cursor over the hero title ── -->
+  <div class="hover-frame" id="hero-hover" aria-hidden="true">
+    <p>Pentagon is a music studio.<br>Based in Chennai, Ind.</p>
+    <p>We specialize in music direction, production and (BG)<br>Your one stop destination for anything music.</p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-tagline-row">
+        <p class="footer-tagline-big"><span class="footer-tagline-accent">creative</span><br>for all services.</p>
+        <img src="logo.png" alt="Pentagon Studios" class="footer-logo">
+      </div>
+
+      <div class="footer-rule"></div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <p class="footer-col-hd">Pages</p>
+          <nav class="footer-site-nav">
+            <a href="talent-strategy.html">Talent &amp; Strategy</a>
+            <a href="mentorship.html">Mentorship</a>
+            <a href="music.html">Music</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-hd">Contact</p>
+          <a href="mailto:YOUR@EMAIL.COM" class="footer-link">YOUR@EMAIL.COM</a>
+          <a href="https://www.instagram.com/studios_pentagon/" class="footer-link" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-hd">Pentagon</p>
+          <p class="footer-col-text">Talent management for people building something real.</p>
+        </div>
+      </div>
+
+      <div class="footer-rule"></div>
+
+      <div class="footer-bottom">
+        <span class="footer-company">Pentagon Studios Private Limited.</span>
+        <span class="footer-year">Since 2023</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

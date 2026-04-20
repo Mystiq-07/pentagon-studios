@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Pentagon Studios</title>
+  <meta name="description" content="Get in touch with Pentagon Studios.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="logo.png">
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-brand">Pentagon Studios</a>
+    <ul class="nav-links">
+      <li><a href="music.html">Music</a></li>
+      <li><a href="talent-strategy.html">Talent &amp; Strategy</a></li>
+      <li><a href="mentorship.html">Mentorship</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <button class="nav-burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE NAV ── -->
+  <div class="nav-mobile" role="dialog" aria-label="Navigation">
+    <a href="music.html">Music</a>
+    <a href="talent-strategy.html">Talent &amp; Strategy</a>
+    <a href="mentorship.html">Mentorship</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- ── CONTACT ── -->
+  <main>
+    <div class="contact-wrap">
+
+      <!-- Left: info -->
+      <div class="contact-info reveal">
+        <h1 class="t-section">Get in<br>touch.</h1>
+
+        <div class="contact-detail">
+          <p class="contact-detail-lbl">Email</p>
+          <!-- ✏️  Replace with real email -->
+          <p class="contact-detail-val"><a href="mailto:YOUR@EMAIL.COM">YOUR@EMAIL.COM</a></p>
+        </div>
+
+        <div class="contact-detail">
+          <p class="contact-detail-lbl">Follow</p>
+          <div class="contact-socials">
+            <!-- ✏️  Replace with real Instagram handle -->
+            <a href="https://www.instagram.com/studios_pentagon/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <p class="contact-detail-lbl">Based</p>
+          <p class="contact-detail-val">CBE & Chennai, India</p>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="reveal reveal-delay-1">
+        <!--
+          ✏️  FORMSPREE SETUP:
+          1. Go to formspree.io and create a free account
+          2. Create a new form — you'll get an endpoint like:
+             https://formspree.io/f/xxxxxxxx
+          3. Replace the action URL below with your endpoint
+        -->
+        <form
+          id="contact-form"
+          action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST"
+          class="contact-form"
+          novalidate
+        >
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          </div>
+
+          <div class="form-field">
+            <label for="subject">What's this about?</label>
+            <select id="subject" name="subject">
+              <option value="" disabled selected>Select one</option>
+              <option value="Talent & Strategy">Talent &amp; Strategy</option>
+              <option value="Mentorship">Mentorship</option>
+              <option value="Music">Music</option>
+              <option value="General">General enquiry</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us what you're working on…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-fill form-submit">Send message</button>
+          <p class="form-note">We'll get back to you within a few days.</p>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-tagline-row">
+        <p class="footer-tagline-big"><span class="footer-tagline-accent">creative</span><br>for all services.</p>
+        <img src="logo.png" alt="Pentagon Studios" class="footer-logo">
+      </div>
+
+      <div class="footer-rule"></div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <p class="footer-col-hd">Pages</p>
+          <nav class="footer-site-nav">
+            <a href="talent-strategy.html">Talent &amp; Strategy</a>
+            <a href="mentorship.html">Mentorship</a>
+            <a href="music.html">Music</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-hd">Contact</p>
+          <a href="mailto:YOUR@EMAIL.COM" class="footer-link">YOUR@EMAIL.COM</a>
+          <a href="https://www.instagram.com/studios_pentagon/" class="footer-link" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-hd">Pentagon</p>
+          <p class="footer-col-text">Talent management for people building something real.</p>
+        </div>
+      </div>
+
+      <div class="footer-rule"></div>
+
+      <div class="footer-bottom">
+        <span class="footer-company">Pentagon Studios Private Limited.</span>
+        <span class="footer-year">Since 2023</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

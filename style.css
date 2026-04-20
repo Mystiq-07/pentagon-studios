@@ -1,0 +1,708 @@
+/* ============================================================
+   PENTAGON STUDIOS — stylesheet
+   ============================================================ */
+
+/*
+  ✏️  PP PANGAIA — drop your font file in /fonts/ and update the url() below.
+  Expected filename: PPPangaia-Regular.otf (or .ttf / .woff2 — update format() to match)
+*/
+@font-face {
+  font-family: 'PP Pangaia';
+  src: url('fonts/PPPangaia-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Walkway Black';
+  src: url('fonts/Walkway_Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- tokens ---- */
+:root {
+  --bg:        #F2EDE3;
+  --text:      #141414;
+  --accent:    #3DBE4A;
+  --dark:      #141414;
+  --dark-text: #F2EDE3;
+  --muted:     rgba(20,20,20,0.45);
+
+  --font-display: 'PP Pangaia', 'DM Serif Display', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+  --font-walkway: 'Walkway Black', 'Inter', sans-serif;
+
+  /* Walkway Black always gets 2.5px tracking */
+  --ls-walk:  1.5px;
+
+  --nav-h:    60px;
+  --max-w:    1200px;
+  --pad:      48px;
+  --col-gap:  32px;   /* consistent column gap across all inner-page grids */
+  --radius:   5px;
+  --ease:     cubic-bezier(0.4,0,0.2,1);
+  --dur:      220ms;
+}
+
+/* ---- reset ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+
+/* ---- type scale ---- */
+/* H1 / hero — PP Pangaia */
+h1, .t-hero {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 10.5vw, 152px);
+  line-height: 0.93;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.t-section {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 7.5vw, 108px);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+/* H2/H3/H4 — Walkway Black */
+h2, .t-h2 {
+  font-family: var(--font-walkway);
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: var(--ls-walk);
+}
+h3, .t-h3 {
+  font-family: var(--font-walkway);
+  font-size: clamp(16px, 1.5vw, 22px);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: var(--ls-walk);
+}
+h4, .t-h4, caption, figcaption, .t-caption {
+  font-family: var(--font-walkway);
+  font-size: clamp(12px, 1vw, 15px);
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: var(--ls-walk);
+}
+
+/* Body / secondary — Walkway Black */
+.t-body, p {
+  font-family: var(--font-walkway);
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 1.75;
+  letter-spacing: var(--ls-walk);
+  color: var(--text);
+}
+
+/* Override for form inputs — keep Inter for legibility */
+input, textarea, select {
+  font-family: var(--font-body) !important;
+  letter-spacing: 0 !important;
+}
+
+/* ---- layout ---- */
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad); }
+
+/* ================================================================
+   NAV
+   ================================================================ */
+nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 200;
+  height: var(--nav-h);
+  padding: 0 var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  transition: border-bottom var(--dur) var(--ease);
+}
+nav.scrolled { border-bottom: 1px solid rgba(20,20,20,0.1); }
+
+/* Hide brand on homepage — nav links fill right side only */
+body.home nav { justify-content: flex-end; }
+body.home .nav-brand { display: none; }
+
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  transition: opacity var(--dur);
+}
+.nav-brand:hover { opacity: 0.55; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-walkway);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: var(--ls-walk);
+  color: var(--text);
+  transition: opacity var(--dur) var(--ease);
+}
+.nav-links a:hover { opacity: 0.5; }
+.nav-links a.active {
+  border: 1.5px solid var(--accent);
+  padding: 5px 11px;
+  border-radius: var(--radius);
+  opacity: 1;
+}
+
+/* hamburger */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 300;
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  transform-origin: center;
+}
+.nav-burger.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+.nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-burger.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+/* mobile overlay */
+.nav-mobile {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 199;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 60px var(--pad);
+  gap: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.nav-mobile.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+.nav-mobile a {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 8vw, 56px);
+  color: var(--text);
+  line-height: 1;
+  transition: opacity var(--dur);
+}
+.nav-mobile a:hover { opacity: 0.45; }
+
+/* ================================================================
+   BUTTONS
+   ================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-walkway);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: var(--ls-walk);
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+  will-change: transform;
+}
+.btn:hover {
+  background: var(--text);
+  color: var(--bg);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(20,20,20,0.14);
+}
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}
+
+/* filled variant */
+.btn-fill {
+  background: var(--text);
+  color: var(--bg);
+}
+.btn-fill:hover {
+  background: transparent;
+  color: var(--text);
+}
+
+/* accent (green border) */
+.btn-accent {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.btn-accent:hover {
+  background: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+  box-shadow: 0 6px 24px rgba(61,190,74,0.25);
+}
+
+/* ================================================================
+   HOME — SCROLL STORY
+   Hero + about merged into one sticky section.
+   The title pins, shrinks from hero → section size on scroll,
+   CTAs fade out, body copy fades in.
+   ================================================================ */
+.scroll-story {
+  height: 300vh;
+  position: relative;
+}
+.scroll-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  padding-top: 338px;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+  padding-bottom: 80px;
+  overflow: hidden;
+}
+#hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 10.5vw, 152px);
+  line-height: 0.93;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  cursor: crosshair;
+  /* font-size overridden by scroll JS */
+}
+/* Both CTAs and copy are absolute so they occupy the same space
+   and don't push each other around. JS sets their top dynamically. */
+.hero-ctas {
+  position: absolute;
+  left: var(--pad);
+  display: flex;
+  gap: 12px;
+  transition: opacity 0.25s var(--ease);
+}
+.about-copy {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  max-width: 680px;
+  font-family: var(--font-walkway);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  pointer-events: none;
+}
+.about-copy p {
+  line-height: 1.4;
+}
+.about-copy.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ================================================================
+   HOVER FRAME
+   — follows cursor over #hero-title
+   ================================================================ */
+.hover-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  padding: 28px 32px;
+  pointer-events: none;
+  z-index: 500;
+  opacity: 0;
+  min-width: 300px;
+  max-width: 440px;
+  transition: opacity 0.15s var(--ease);
+  will-change: transform;
+}
+.hover-frame.visible { opacity: 1; }
+.hover-frame p {
+  font-family: var(--font-walkway);
+  font-size: 14px;
+  line-height: 1.65;
+  letter-spacing: var(--ls-walk);
+  color: var(--text);
+}
+.hover-frame p + p { margin-top: 24px; }
+
+/* ================================================================
+   INNER PAGES — GENERIC
+   ================================================================ */
+.page-hero {
+  min-height: 72vh;
+  padding-top: calc(var(--nav-h) + 100px);
+  padding-bottom: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+.page-hero-inner {
+  max-width: 700px;
+  text-align: center;
+}
+.page-copy {
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.68;
+  margin-bottom: 52px;
+}
+.enquiry-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.enquiry-label { font-size: 16px; }
+
+/* ================================================================
+   CONTACT PAGE
+   ================================================================ */
+.contact-wrap {
+  padding-top: calc(var(--nav-h) + 80px);
+  padding-bottom: 100px;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--col-gap);
+  align-items: start;
+}
+.contact-info h1 { margin-bottom: 40px; }
+.contact-detail { margin-bottom: 32px; }
+.contact-detail-lbl {
+  font-family: var(--font-walkway);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: var(--ls-walk);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.contact-detail-val {
+  font-family: var(--font-walkway);
+  font-size: 16px;
+  letter-spacing: var(--ls-walk);
+}
+.contact-detail-val a {
+  border-bottom: 1px solid var(--text);
+  transition: opacity var(--dur);
+}
+.contact-detail-val a:hover { opacity: 0.5; }
+
+.contact-socials {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.contact-socials a {
+  font-family: var(--font-walkway);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: var(--ls-walk);
+  border-bottom: 1px solid var(--text);
+  transition: opacity var(--dur);
+}
+.contact-socials a:hover { opacity: 0.5; }
+
+/* form */
+.contact-form { display: flex; flex-direction: column; gap: 20px; }
+.form-field { display: flex; flex-direction: column; gap: 7px; }
+.form-field label {
+  font-family: var(--font-walkway);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: var(--ls-walk);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.form-field input,
+.form-field textarea,
+.form-field select {
+  background: transparent;
+  border: 1.5px solid rgba(20,20,20,0.18);
+  border-radius: var(--radius);
+  padding: 13px 16px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  transition: border-color var(--dur) var(--ease);
+  appearance: none;
+}
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus { border-color: var(--text); }
+.form-field textarea { resize: vertical; min-height: 130px; }
+.form-submit { width: 100%; padding: 15px; font-size: 15px; margin-top: 4px; }
+.form-note {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: -4px;
+}
+
+/* ================================================================
+   MUSIC — COMING SOON
+   ================================================================ */
+.coming-soon {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: var(--pad);
+  padding-top: calc(var(--nav-h) + 40px);
+  padding-bottom: 100px;
+}
+.coming-soon-label {
+  font-family: var(--font-walkway);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: var(--ls-walk);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.coming-soon h1 { margin-bottom: 28px; }
+.coming-soon p {
+  font-family: var(--font-walkway);
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 1.75;
+  letter-spacing: var(--ls-walk);
+  max-width: 480px;
+  color: var(--text);
+  margin-bottom: 40px;
+}
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+footer {
+  background: var(--dark);
+  border-radius: 14px 14px 0 0;
+}
+.footer-inner {
+  padding: 80px 15% 52px;
+}
+
+/* ─── tagline row (tagline + logo side by side) ──────── */
+.footer-tagline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 56px;
+}
+.footer-tagline-big {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 7vw, 100px);
+  line-height: 0.93;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--dark-text);
+  margin-bottom: 0;
+}
+.footer-tagline-accent { color: #137043; }
+.footer-logo {
+  height: clamp(130px, 19vw, 255px);
+  width: auto;
+  display: block;
+  mix-blend-mode: screen;
+  padding-right: 10%;
+}
+
+/* ─── rule ────────────────────────────────────────────── */
+.footer-rule {
+  height: 1px;
+  background: rgba(242,237,227,0.1);
+  margin-bottom: 40px;
+}
+
+/* ─── footer nav reset (overrides the global nav{} rule) ─── */
+nav.footer-site-nav {
+  position: static;
+  inset: auto;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  z-index: auto;
+  border-bottom: none;
+  justify-content: flex-start;
+  align-items: flex-start;
+  transition: none;
+}
+
+/* ─── sitemap grid ────────────────────────────────────── */
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.footer-col-hd {
+  font-family: var(--font-walkway);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: var(--ls-walk);
+  text-transform: uppercase;
+  color: var(--dark-text);
+  opacity: 0.7;
+  margin-bottom: 16px;
+}
+.footer-site-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-site-nav a,
+.footer-link {
+  font-family: var(--font-walkway);
+  font-size: 13px;
+  letter-spacing: var(--ls-walk);
+  color: var(--dark-text);
+  opacity: 0.7;
+  line-height: 1.5;
+  transition: opacity var(--dur);
+}
+.footer-site-nav a:hover,
+.footer-link:hover { opacity: 1; }
+.footer-link { display: block; margin-bottom: 10px; }
+.footer-col-text {
+  font-family: var(--font-walkway);
+  font-size: 12px;
+  letter-spacing: var(--ls-walk);
+  line-height: 1.7;
+  color: var(--dark-text);
+  opacity: 0.7;
+}
+
+/* ─── bottom bar ──────────────────────────────────────── */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-company,
+.footer-year {
+  font-family: var(--font-walkway);
+  font-size: 11px;
+  letter-spacing: var(--ls-walk);
+  color: var(--dark-text);
+  opacity: 0.7;
+  line-height: 1.6;
+}
+.footer-year sup { font-size: 0.65em; vertical-align: super; }
+
+/* ================================================================
+   SCROLL FADE-IN
+   — only hides when JS is confirmed active (.js on <html>)
+   — guarantees content is visible if JS is slow or fails
+   ================================================================ */
+.reveal {
+  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+}
+.js .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.js .reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.32s; }
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 900px) {
+  :root { --pad: 28px; }
+
+  .contact-wrap {
+    grid-template-columns: 1fr;
+    gap: 56px;
+    padding-top: calc(var(--nav-h) + 48px);
+  }
+
+  .footer-inner { padding-left: 8%; padding-right: 8%; }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --pad: 20px;
+    --nav-h: 52px;
+  }
+
+  /* nav */
+  nav { justify-content: space-between; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+
+  /* scroll story / hero */
+  .scroll-sticky { padding-top: 180px; padding-bottom: 52px; }
+  .hero-ctas { flex-direction: column; align-items: flex-start; }
+  .hero-ctas .btn { width: 100%; max-width: 240px; }
+
+  /* inner */
+  .page-hero { padding-top: calc(var(--nav-h) + 60px); }
+  .enquiry-row { flex-direction: column; align-items: center; }
+
+  /* coming soon */
+  .coming-soon { padding-bottom: 72px; }
+
+  /* footer */
+  footer { border-radius: 10px 10px 0 0; }
+  .footer-inner { padding: 52px var(--pad) 36px; }
+  .footer-cols { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-col:last-child { grid-column: 1 / -1; }
+}
