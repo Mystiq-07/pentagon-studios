@@ -112,84 +112,91 @@ window.addEventListener('load', function () {
   var copyEl     = document.getElementById('about-copy');
 
   if (story && titleEl) {
-    var stickyEl = titleEl.parentElement; // .scroll-sticky
+    var isMobile = window.matchMedia('(max-width: 640px)').matches;
 
-    // Mirror CSS clamp values
-    function clampPx(mn, vwF, mx2) {
-      return Math.min(Math.max(window.innerWidth * vwF, mn), mx2);
-    }
-    var H = { mn: 60,  vw: 0.105, mx: 152 };
-    var S = { mn: 44,  vw: 0.075, mx: 108 };
+    if (isMobile) {
+      // Static layout on mobile — CSS handles positioning, just reveal the copy
+      if (copyEl) copyEl.classList.add('visible');
+    } else {
+      var stickyEl = titleEl.parentElement; // .scroll-sticky
 
-    var curSz = clampPx(H.mn, H.vw, H.mx);
-    var tgtSz = curSz;
-    var raf   = null;
+      // Mirror CSS clamp values
+      function clampPx(mn, vwF, mx2) {
+        return Math.min(Math.max(window.innerWidth * vwF, mn), mx2);
+      }
+      var H = { mn: 60,  vw: 0.105, mx: 152 };
+      var S = { mn: 44,  vw: 0.075, mx: 108 };
 
-    // Read container padding-top (338px desktop, 180px mobile)
-    function padTop() {
-      return parseFloat(getComputedStyle(stickyEl).paddingTop) || 338;
-    }
+      var curSz = clampPx(H.mn, H.vw, H.mx);
+      var tgtSz = curSz;
+      var raf   = null;
 
-    function getProgress() {
-      var r      = story.getBoundingClientRect();
-      var travel = story.offsetHeight - window.innerHeight;
-      return travel > 0 ? Math.max(0, Math.min(1, -r.top / travel)) : 0;
-    }
-
-    function tick() {
-      var p     = getProgress();
-      scrollProgress = p;
-
-      var hSz = clampPx(H.mn, H.vw, H.mx);
-      var sSz = clampPx(S.mn, S.vw, S.mx);
-
-      tgtSz  = hSz + (sSz - hSz) * p;
-      curSz += (tgtSz - curSz) * 0.12;
-      titleEl.style.fontSize = curSz.toFixed(1) + 'px';
-
-      // Position CTAs and copy directly below the shrinking title
-      // title visual bottom = paddingTop + fontSize × lineHeight(0.93)
-      var titleBottom = padTop() + curSz * 0.93;
-      var gap         = 44;
-      var subTop      = titleBottom + gap;
-
-      // CTAs stay full size, fade out over first 35% of travel
-      if (ctasEl) {
-        ctasEl.style.top       = subTop + 'px';
-        ctasEl.style.transform = '';
-        ctasEl.style.opacity   = Math.max(0, 1 - p / 0.35).toFixed(3);
+      // Read container padding-top (338px desktop)
+      function padTop() {
+        return parseFloat(getComputedStyle(stickyEl).paddingTop) || 338;
       }
 
-      // Copy sits below the full-height CTAs
-      var ctaH = ctasEl ? ctasEl.offsetHeight + 28 : 0;
-      if (copyEl) copyEl.style.top = (subTop + ctaH) + 'px';
-
-      // Copy appears after 60%
-      if (copyEl) copyEl.classList.toggle('visible', p >= 0.6);
-
-      // Kill hover frame the moment scrolling starts
-      if (hoverFrame && p > 0.04) hoverFrame.classList.remove('visible');
-
-      // Keep animating until settled
-      if (Math.abs(curSz - tgtSz) > 0.15) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        raf = null;
+      function getProgress() {
+        var r      = story.getBoundingClientRect();
+        var travel = story.offsetHeight - window.innerHeight;
+        return travel > 0 ? Math.max(0, Math.min(1, -r.top / travel)) : 0;
       }
+
+      function tick() {
+        var p     = getProgress();
+        scrollProgress = p;
+
+        var hSz = clampPx(H.mn, H.vw, H.mx);
+        var sSz = clampPx(S.mn, S.vw, S.mx);
+
+        tgtSz  = hSz + (sSz - hSz) * p;
+        curSz += (tgtSz - curSz) * 0.12;
+        titleEl.style.fontSize = curSz.toFixed(1) + 'px';
+
+        // Position CTAs and copy directly below the shrinking title
+        // title visual bottom = paddingTop + fontSize × lineHeight(0.93)
+        var titleBottom = padTop() + curSz * 0.93;
+        var gap         = 44;
+        var subTop      = titleBottom + gap;
+
+        // CTAs stay full size, fade out over first 35% of travel
+        if (ctasEl) {
+          ctasEl.style.top       = subTop + 'px';
+          ctasEl.style.transform = '';
+          ctasEl.style.opacity   = Math.max(0, 1 - p / 0.35).toFixed(3);
+        }
+
+        // Copy sits below the full-height CTAs
+        var ctaH = ctasEl ? ctasEl.offsetHeight + 28 : 0;
+        if (copyEl) copyEl.style.top = (subTop + ctaH) + 'px';
+
+        // Copy appears after 60%
+        if (copyEl) copyEl.classList.toggle('visible', p >= 0.6);
+
+        // Kill hover frame the moment scrolling starts
+        if (hoverFrame && p > 0.04) hoverFrame.classList.remove('visible');
+
+        // Keep animating until settled
+        if (Math.abs(curSz - tgtSz) > 0.15) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          raf = null;
+        }
+      }
+
+      window.addEventListener('scroll', function () {
+        if (!raf) raf = requestAnimationFrame(tick);
+      }, { passive: true });
+
+      window.addEventListener('resize', function () {
+        curSz = clampPx(H.mn, H.vw, H.mx);
+        titleEl.style.fontSize = '';
+        if (!raf) raf = requestAnimationFrame(tick);
+      });
+
+      // Run immediately to set initial positions
+      requestAnimationFrame(tick);
     }
-
-    window.addEventListener('scroll', function () {
-      if (!raf) raf = requestAnimationFrame(tick);
-    }, { passive: true });
-
-    window.addEventListener('resize', function () {
-      curSz = clampPx(H.mn, H.vw, H.mx);
-      titleEl.style.fontSize = '';
-      if (!raf) raf = requestAnimationFrame(tick);
-    });
-
-    // Run immediately to set initial positions
-    requestAnimationFrame(tick);
   }
 
   // --------------------------------------------------------------
@@ -297,5 +304,19 @@ window.addEventListener('load', function () {
       }
     });
   }
+
+  // --------------------------------------------------------------
+  // 9. FAQ accordion
+  // --------------------------------------------------------------
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function (el) {
+        el.classList.remove('open');
+      });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
 
 }); // end window.load
