@@ -40,7 +40,7 @@
 
   --nav-h:    60px;
   --max-w:    1200px;
-  --pad:      48px;
+  --pad:      62px;
   --col-gap:  32px;   /* consistent column gap across all inner-page grids */
   --radius:   5px;
   --ease:     cubic-bezier(0.4,0,0.2,1);
@@ -532,7 +532,7 @@ footer {
   border-radius: 14px 14px 0 0;
 }
 .footer-inner {
-  padding: 80px 15% 52px;
+  padding: 80px 80px 52px;
 }
 
 /* ─── tagline row (tagline + logo side by side) ──────── */
@@ -676,6 +676,13 @@ nav.footer-site-nav {
   padding-top: calc(var(--nav-h) + 120px);
   padding-bottom: 100px;
 }
+.inner-hero--center {
+  align-items: center;
+  text-align: center;
+}
+.inner-hero--center .inner-hero-sub {
+  max-width: 560px;
+}
 .inner-hero .t-hero { margin-bottom: 28px; }
 .inner-hero-title {
   font-size: clamp(36px, 5.5vw, 80px) !important;
@@ -759,7 +766,6 @@ nav.footer-site-nav {
 /* FAQ accordion */
 .faq-list {
   margin-top: 48px;
-  max-width: 680px;
 }
 .faq-item { border-bottom: 1px solid rgba(20,20,20,0.08); }
 .faq-item:first-child { border-top: 1px solid rgba(20,20,20,0.08); }
@@ -805,16 +811,37 @@ nav.footer-site-nav {
 }
 
 /* Programme tracks — two-column cards */
-.programme-tracks {
+.program-tracks {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--col-gap);
   margin-top: 48px;
 }
-.programme-track {
+.program-track {
   border: 1.5px solid rgba(20,20,20,0.1);
   border-radius: var(--radius);
   padding: 36px 32px;
+}
+.program-track--elevated {
+  box-shadow: 0 8px 32px rgba(20,20,20,0.08), 0 2px 8px rgba(20,20,20,0.05);
+  border-color: rgba(20,20,20,0.15);
+}
+.program-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 32px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(20,20,20,0.08);
+}
+.program-cta-row p {
+  font-family: var(--font-walkway);
+  font-size: 15px;
+  letter-spacing: var(--ls-walk);
+  color: var(--muted);
+  white-space: nowrap;
+  line-height: 1.6;
 }
 .track-duration {
   font-family: var(--font-walkway);
@@ -831,8 +858,8 @@ nav.footer-site-nav {
   margin-bottom: 12px;
   align-self: flex-start;
 }
-.programme-track .t-h3 { margin-bottom: 16px; }
-.programme-track .section-body { max-width: 100%; margin-bottom: 24px; }
+.program-track .t-h3 { margin-bottom: 16px; }
+.program-track .section-body { max-width: 100%; margin-bottom: 24px; }
 .track-meta {
   font-family: var(--font-walkway);
   font-size: 11px;
@@ -870,7 +897,7 @@ nav.footer-site-nav {
     padding-top: calc(var(--nav-h) + 48px);
   }
 
-  .footer-inner { padding-left: 8%; padding-right: 8%; }
+  .footer-inner { padding-left: var(--pad); padding-right: var(--pad); }
 }
 
 @media (max-width: 640px) {
@@ -975,8 +1002,8 @@ nav.footer-site-nav {
   .inner-cta { padding: 80px var(--pad); }
   .faq-list { margin-top: 32px; }
   .process-list { margin-top: 32px; grid-template-columns: 1fr; }
-  .programme-tracks { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
-  .programme-track { padding: 28px 24px; }
+  .program-tracks { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
+  .program-track { padding: 28px 24px; }
 
   /* footer */
   footer { border-radius: 10px 10px 0 0; }
