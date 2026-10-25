@@ -149,6 +149,8 @@ body.home .nav-brand { display: none; }
   transition: opacity var(--dur);
 }
 .nav-brand:hover { opacity: 0.55; }
+.nav-brand { display: inline-flex; align-items: center; gap: 10px; }
+.nav-mark { width: 26px; height: auto; display: block; }
 
 .nav-links {
   display: flex;
@@ -549,7 +551,6 @@ footer {
 }
 
 /* ─── tagline row (tagline + logo side by side) ──────── */
-.footer-wordmark { display: none; }
 .footer-tagline-row {
   display: flex;
   align-items: center;
@@ -574,23 +575,37 @@ footer {
   padding-right: 10%;
 }
 
-/* ── LOGO / WORDMARK TOGGLE ───────────────────────────────────────────
-   Currently: logo image HIDDEN, text wordmark SHOWN.
-   To put the logo back, delete this whole block. The image and the
-   <span class="footer-wordmark"> both stay in the HTML either way.
-   ------------------------------------------------------------------- */
-.footer-logo { display: none; }
-.footer-wordmark {
-  display: block;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(32px, 4vw, 56px);
-  line-height: 0.93;
-  letter-spacing: -0.02em;
-  text-align: right;
-  color: var(--dark-text);
+/* Logo unfold — runs once when the footer scrolls into view
+   (script.js adds .in). Reveals outward from the vortex centre of the
+   mark while it turns into place and sharpens. */
+@property --unfold {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 100%;
 }
-/* ─────────────────────────────────────────────────────────────────── */
+.js .footer-logo {
+  --unfold: 0%;
+  opacity: 0;
+  transform: rotate(-16deg) scale(0.88);
+  filter: blur(8px);
+  -webkit-mask-image: radial-gradient(circle at 59% 49%, #000 var(--unfold), transparent calc(var(--unfold) + 18%));
+          mask-image: radial-gradient(circle at 59% 49%, #000 var(--unfold), transparent calc(var(--unfold) + 18%));
+}
+/* Transitions live on .in only, so the hidden state applies instantly on load */
+.js .footer-logo.in {
+  --unfold: 100%;
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition:
+    --unfold   1.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity    0.6s var(--ease),
+    transform  1.6s cubic-bezier(0.22, 1, 0.36, 1),
+    filter     1.1s var(--ease) 0.15s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .footer-logo, .js .footer-logo.in { transition: opacity 0.4s var(--ease); transform: none; filter: none; -webkit-mask-image: none; mask-image: none; }
+}
 
 /* ─── rule ────────────────────────────────────────────── */
 .footer-rule {
@@ -1041,7 +1056,6 @@ nav.footer-site-nav {
   .footer-inner { padding: 52px var(--pad) 36px; }
   .footer-tagline-big { font-size: clamp(36px, 10vw, 56px); }
   .footer-logo { height: clamp(80px, 22vw, 120px); padding-right: 0; }
-  .footer-wordmark { font-size: clamp(20px, 6vw, 30px); }
   .footer-cols { grid-template-columns: 1fr 1fr; gap: 32px; }
   .footer-col:last-child { grid-column: 1 / -1; }
 }

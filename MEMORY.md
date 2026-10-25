@@ -63,11 +63,12 @@ thinks in? If real, "Talent & Strategy" sitting inside a music company's nav is 
 container — it caps the more valuable service at music. If music-only, current page is right.
 
 ### Logo
-Hidden as of 2026-10-20 in favour of a text wordmark ("PENTAGON / STUDIOS", Walkway,
-right-aligned in the footer tagline row). Both the `<img class="footer-logo">` and
-`<span class="footer-wordmark">` are in the HTML on all 5 pages; a commented
-LOGO / WORDMARK TOGGLE block in style.css (after `.footer-logo`) hides the image and
-shows the wordmark. Delete that block to restore the logo exactly as it was.
+Restored 2026-10-25 (owner disliked the text wordmark). Footer: the real `logo.png` with a
+one-time "unfold" when it scrolls into view: radial mask from the vortex centre (59% 49%),
+-16deg turn and blur settle over ~1.6s (style.css `.js .footer-logo`, script.js §7b; needs
+@property --unfold). Wordmark span + CSS deleted. Nav: 26px `.nav-mark` beside the
+"Pentagon Studios" text on inner pages (home hides the nav brand). A hand-built SVG copy of
+the logo was tried and rejected: couldn't match the ring spacing exactly; use the PNG.
 
 ## Restructure — 2026-10-25 (owner answers)
 - **Production = two pillars.** (1) Film production & music videos: Pentagon makes BOTH

@@ -374,6 +374,20 @@ window.addEventListener('load', function () {
   }
 
   // --------------------------------------------------------------
+  // 7b. Footer logo — unfold once when it scrolls into view
+  // --------------------------------------------------------------
+  var footerLogo = document.querySelector('.footer-logo');
+  if (footerLogo) {
+    var logoIO = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        footerLogo.classList.add('in');
+        logoIO.disconnect();
+      }
+    }, { threshold: 0.35 });
+    logoIO.observe(footerLogo);
+  }
+
+  // --------------------------------------------------------------
   // 8. Contact form (Formspree)
   // --------------------------------------------------------------
   var form = document.getElementById('contact-form');
