@@ -290,7 +290,10 @@ body.home .nav-brand { display: none; }
    CTAs fade out, body copy fades in.
    ================================================================ */
 .scroll-story {
-  height: 300vh;
+  /* The transition is time-based and the first scroll steps straight to
+     the copy (script.js §5). This sets how long the copy then stays pinned
+     before the page carries on. */
+  height: 180vh;
   position: relative;
 }
 .scroll-sticky {
@@ -312,6 +315,7 @@ body.home .nav-brand { display: none; }
   cursor: crosshair;
   /* font-size overridden by scroll JS */
 }
+body.hover-zone .scroll-sticky { cursor: crosshair; }
 /* Both CTAs and copy are absolute so they occupy the same space
    and don't push each other around. JS sets their top dynamically. */
 .hero-ctas {
@@ -329,7 +333,8 @@ body.home .nav-brand { display: none; }
   font-family: var(--font-walkway);
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  filter: blur(6px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), filter 0.6s var(--ease);
   pointer-events: none;
 }
 .about-copy p {
@@ -338,6 +343,7 @@ body.home .nav-brand { display: none; }
 .about-copy.visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
   pointer-events: auto;
 }
 
@@ -355,12 +361,19 @@ body.home .nav-brand { display: none; }
   pointer-events: none;
   z-index: 500;
   opacity: 0;
+  filter: blur(12px);
   min-width: 300px;
   max-width: 440px;
-  transition: opacity 0.15s var(--ease);
-  will-change: transform;
+  /* Hide: quick, no delay */
+  transition: opacity 0.25s var(--ease), filter 0.25s var(--ease);
+  will-change: transform, opacity, filter;
 }
-.hover-frame.visible { opacity: 1; }
+/* Show: short hold, then sharpen in from a blur */
+.hover-frame.visible {
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity 0.5s var(--ease) 0.18s, filter 0.6s var(--ease) 0.18s;
+}
 .hover-frame p {
   font-family: var(--font-walkway);
   font-size: 14px;
@@ -536,6 +549,7 @@ footer {
 }
 
 /* ─── tagline row (tagline + logo side by side) ──────── */
+.footer-wordmark { display: none; }
 .footer-tagline-row {
   display: flex;
   align-items: center;
@@ -559,6 +573,24 @@ footer {
   mix-blend-mode: screen;
   padding-right: 10%;
 }
+
+/* ── LOGO / WORDMARK TOGGLE ───────────────────────────────────────────
+   Currently: logo image HIDDEN, text wordmark SHOWN.
+   To put the logo back, delete this whole block. The image and the
+   <span class="footer-wordmark"> both stay in the HTML either way.
+   ------------------------------------------------------------------- */
+.footer-logo { display: none; }
+.footer-wordmark {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 0.93;
+  letter-spacing: -0.02em;
+  text-align: right;
+  color: var(--dark-text);
+}
+/* ─────────────────────────────────────────────────────────────────── */
 
 /* ─── rule ────────────────────────────────────────────── */
 .footer-rule {
@@ -696,6 +728,13 @@ nav.footer-site-nav {
   max-width: 480px;
   margin-bottom: 40px;
 }
+
+/* ── Airy heroes (Production, Talent & Strategy) ──
+   More air between label → title → sub → CTA. Mentorship's hero
+   keeps the original tighter rhythm. */
+.inner-hero--airy .coming-soon-label { margin-bottom: 40px; }
+.inner-hero--airy .t-hero            { margin-bottom: 44px; }
+.inner-hero--airy .inner-hero-sub    { margin-bottom: 56px; }
 
 .inner-section {
   padding: 80px var(--pad);
@@ -879,12 +918,6 @@ nav.footer-site-nav {
 /* ================================================================
    DESKTOP OVERRIDES
    ================================================================ */
-/* Restore original CTA order on desktop (HTML order is mobile-first) */
-@media (min-width: 641px) {
-  .hero-ctas .btn-accent:first-child { order: 2; }
-  .hero-ctas .btn-accent:last-child  { order: 1; }
-}
-
 /* ================================================================
    RESPONSIVE
    ================================================================ */
@@ -936,17 +969,11 @@ nav.footer-site-nav {
     padding: 10px 20px;
     font-size: 13px;
   }
-  /* Get in touch — filled green (primary) on mobile */
-  .hero-ctas .btn-accent:first-child {
+  /* Get in touch — filled green on mobile */
+  .hero-ctas .btn-accent {
     background: var(--accent);
     color: var(--text);
     border-color: var(--accent);
-  }
-  /* Explore Portfolio — ghost/outline (secondary) on mobile */
-  .hero-ctas .btn-accent:last-child {
-    background: transparent;
-    color: var(--text);
-    border-color: rgba(20,20,20,0.3);
   }
   /* Trim about copy to 2 paragraphs on mobile */
   .about-copy p:nth-child(n+3) { display: none; }
@@ -994,6 +1021,10 @@ nav.footer-site-nav {
 
   /* inner sections */
   .inner-hero { padding-bottom: 72px; }
+  .inner-hero-title { white-space: normal; }
+  .inner-hero--airy .coming-soon-label { margin-bottom: 28px; }
+  .inner-hero--airy .t-hero            { margin-bottom: 32px; }
+  .inner-hero--airy .inner-hero-sub    { margin-bottom: 40px; }
   .inner-section {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -1010,6 +1041,11 @@ nav.footer-site-nav {
   .footer-inner { padding: 52px var(--pad) 36px; }
   .footer-tagline-big { font-size: clamp(36px, 10vw, 56px); }
   .footer-logo { height: clamp(80px, 22vw, 120px); padding-right: 0; }
+  .footer-wordmark { font-size: clamp(20px, 6vw, 30px); }
   .footer-cols { grid-template-columns: 1fr 1fr; gap: 32px; }
   .footer-col:last-child { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-frame, .hover-frame.visible, .about-copy { filter: none; transition-duration: 0.01s; transition-delay: 0s; }
 }
