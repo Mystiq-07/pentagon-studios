@@ -1,5 +1,5 @@
 # Pentagon Studios — Project Memory
-_Last updated: 2026-10-20_
+_Last updated: 2026-10-25_
 
 ## Who
 - **User:** Mohan (product designer, UX designer, creative technologist)
@@ -83,7 +83,13 @@ shows the wordmark. Delete that block to restore the logo exactly as it was.
 - Footer Pentagon column on all pages → "Films, music and artist strategy."
 - Homepage hover frame line → "We make films, music videos and independent music."
 
-## WHERE WE LEFT OFF — session of 2026-10-20
+## Deployed — 2026-10-25
+Everything up to commit `fc68f5e` is committed, pushed and LIVE on pentagon-studios.vercel.app.
+Xcode licence accepted (git works). Vercel CLI updated to 65.2.0 and re-logged in. If deploy
+says "token is not valid", the owner runs `! vercel login` (no password needed). `sudo` can't
+run via `!`; it needs the macOS Terminal app.
+
+## (Historical) WHERE WE LEFT OFF — session of 2026-10-20
 
 ### Shipped to disk this session (NOT deployed, NOT committed)
 1. **`production.html` created.** Hero → Selected work (3 "In progress" cards: Feature
