@@ -84,67 +84,38 @@ the logo was tried and rejected: couldn't match the ring spacing exactly; use th
 - Footer Pentagon column on all pages → "Films, music and artist strategy."
 - Homepage hover frame line → "We make films, music videos and independent music."
 
-## Deployed — 2026-10-25
-Everything up to commit `fc68f5e` is committed, pushed and LIVE on pentagon-studios.vercel.app.
-Xcode licence accepted (git works). Vercel CLI updated to 65.2.0 and re-logged in. If deploy
-says "token is not valid", the owner runs `! vercel login` (no password needed). `sudo` can't
-run via `!`; it needs the macOS Terminal app.
+## WHERE WE LEFT OFF — session of 2026-10-25 (READ FIRST)
+Everything is committed, pushed and LIVE. Last commit `0f63faf` (logo back). Working tree
+clean apart from `.DS_Store` (deliberately never committed).
 
-## (Historical) WHERE WE LEFT OFF — session of 2026-10-20
+### This session shipped
+- Production restructured into two pillars; T&S into consultation + management (see
+  "Restructure" above). Homepage copy now production-led; Explore Portfolio CTA removed.
+- Homepage hover box (new copy, wide trigger band, blur-in) and scroll story (one-scroll
+  timed transition + step gate). See "Homepage behaviour" below.
+- Nav order: Production → T&S → Mentorship → Contact.
+- Logo restored (footer unfold + nav mark). See "Logo" above.
+- `.vercelignore` added: MEMORY.md was being served publicly on the site; now 404.
 
-### Shipped to disk this session (NOT deployed, NOT committed)
-1. **`production.html` created.** Hero → Selected work (3 "In progress" cards: Feature
-   film / Independent single / Artist EP, described by shape because nothing has
-   released) → What we do ("Creative for all services" + 4 numbered services) → The
-   studio (Coimbatore + partner rooms in Chennai, Kochi, Hyderabad, Bangalore) →
-   "Bring us the song." CTA. Reuses existing CSS classes only; no new layout CSS.
-2. **`music.html` deleted.** Folded into Production. `/music` → `/production` 301 added
-   to `vercel.json`. No dangling links remain.
-3. **Nav reordered** to Production → Mentorship → Talent & Strategy → Contact in the
-   desktop nav, mobile drawer and footer Pages column on all 5 pages.
-4. **Homepage "Explore Portfolio"** button repointed from talent-strategy to production.
-5. **`talent-strategy.html` rewritten** to the deliberately-minimal version: 2 sections
-   (How it works / Doors, and which ones matter), no FAQs, no service list, no pricing.
-   Hero h1 is two lines: "For people building" / "something real."
-6. **Hero treatment on Production + T&S:** centred, with a new `.inner-hero--airy`
-   modifier class giving wider label→title→sub→CTA spacing (40/44/56px desktop,
-   28/32/40px mobile). Mentorship deliberately does NOT carry `--airy`.
-   `.inner-hero-title` now wraps below 640px to stop the nowrap titles clipping.
-7. **`mentorship.html` corrected** — it claimed exceptional Residency students are
-   "considered for a role within Talent & Strategy", which contradicts the owner's
-   answer that T&S is not a hiring destination. Now reads "brought into the network".
-8. **`contact.html`** — subject dropdown said "Music" (dead category), now "Production".
-   Stale template scaffolding comments removed.
-9. **Footer "Pentagon" column** reworded on all 5 pages; it repeated the hero phrase
-   "building something real" site-wide.
-10. **Logo hidden, wordmark live.** See the Logo section above. Wordmark is PP Pangaia
-    (`--font-display`), 700, 32–56px, -0.02em tracking, 0.93 line-height, right-aligned,
-    sentence case — matched to the big footer tagline opposite it. Uppercase + Walkway
-    tracking were removed; if caps come back, the tracking must open up again.
+### Waiting on the owner
+1. **Hong Kong**: hover box says "India and Hong Kong", but the footer Pentagon column
+   ("Coimbatore & Chennai") and contact page ("CBE & Chennai, India") don't. Ask if HK is
+   a real office/team, then align the wording.
+2. **GitHub repo is PUBLIC**, so MEMORY.md (internal positioning, parked client story)
+   is readable there, history included. Recommended: make the repo private (doesn't affect
+   deploys, which run from the Mac). Owner hasn't decided.
+3. **Nav mark size**: 26px reads as a small green pentagon; offered 32px.
+4. Film list on Production says Pentagon handles the edit. Confirm it isn't outsourced.
 
-### Blocked / not verified — READ THIS FIRST ON RESTART
-- **Nothing has been seen rendered.** Playwright's Chromium is missing, so the gstack
-  `/browse` daemon cannot start. Fix: `npx playwright install chromium`. Every page's
-  markup was validated as tag-balanced and the mobile breakpoints were read, but no
-  screenshot exists. **Visual QA at 1440 and 390 is the first job.**
-- **Nothing is deployed.** pentagon-studios.vercel.app is still the April build with a
-  Music page. Deploy is manual: `vercel --prod`.
-- **Git is unusable** — Xcode licence unsigned, so every git command exits 69. Fix with
-  `sudo xcodebuild -license` (interactive, needs the user). **Zero commits were made this
-  session and no checkpoint exists.** Pre-session state is whatever the last commit holds
-  (3 May 2026).
-- Local preview: `python3 -m http.server 8777` from the project folder, then
-  `http://localhost:8777/index.html`. Needs `.html` locally; Vercel's cleanUrls strips it.
-  **Hard refresh (Cmd+Shift+R)** — the server returns 304s and Chrome serves stale CSS.
-
-### Next up
-1. Visual QA both new pages once Chromium is installed.
-2. Mobile pass — the owner's standing complaint. Known issue: at 641–900px
-   `.inner-section` stays a 260px + 1fr grid, which squeezes the cards. Pre-existing.
-3. Real project names + credits into Production's 3 cards as releases land.
-4. Decide the open question above (non-music strategy work) — it governs whether
-   "Talent & Strategy" is the right container.
-5. Deploy.
+### Tooling (all working now)
+- Git: Xcode licence accepted 2026-10-25. `sudo` can't run via `!` in Claude Code; the
+  owner has to use the macOS Terminal app for anything needing a password.
+- Vercel: CLI 65.2.0, logged in as mohankumar29632-6083. Deploy: `vercel --prod --yes`.
+  If "token is not valid", the owner runs `! vercel login`. Git push does NOT auto-deploy.
+- Visual QA: Playwright in the scratchpad with `chromium.launch({ channel: 'chrome' })`
+  uses the installed Google Chrome. Use `page.screenshot({clip})`, not element
+  screenshots, to catch mid-animation frames (element shots wait for motion to stop).
+- Local preview: `python3 -m http.server 8777`, then localhost:8777/index.html. Hard refresh.
 
 ## Live URLs
 - **Vercel:** https://pentagon-studios.vercel.app/
@@ -189,9 +160,13 @@ Production → Mentorship → T&S). Applies to desktop nav, mobile drawer and fo
 - Logo colour matched to #137043 via mix-blend-mode: screen
 
 ## Pending work
-1. **Production page content** — project names, years, roles, one-line descriptions. Cards are placeholders.
-2. **Mobile layout fixes** — user said mobile looks bad. Breakpoints exist at 900px and 640px; `.program-tracks` and `.inner-section` do collapse at 640px. Tablet range (641–900px) keeps `.inner-section` two-column, which squeezes cards.
-3. **Auto-deploy** — git push doesn't trigger Vercel, still using `vercel --prod`.
+1. **Production page content**: real project names, years and credits into the 3
+   "In progress" cards as releases land.
+2. **Mobile pass**: owner's standing complaint. Phone widths (390) checked and fine for the
+   homepage, footer and nav. The known gap is tablet (641–900px), where `.inner-section`
+   stays a 260px + 1fr grid and squeezes the cards.
+3. **Auto-deploy**: git push doesn't trigger Vercel; still manual `vercel --prod`.
+4. Open decision above (non-music strategy work vs the "Talent & Strategy" container).
 
 ## Talent & Strategy positioning (decided 2026-10-19)
 Deliberately subtle. Detail would commoditise strategy work, so the page gives minimum
